@@ -29,10 +29,10 @@
             <span class="red-point">*</span>
           </div>
           <div class="form-col">
-            <label for="tel">联系电话：</label>
+            <label for="mobile">联系电话：</label>
             <div class="input-box">
-              <FormItem prop="tel">
-                <Input v-model="formValidate.tel" />
+              <FormItem prop="mobile">
+                <Input v-model="formValidate.mobile" />
               </FormItem>
             </div>
             <span class="red-point">*</span>
@@ -40,19 +40,19 @@
         </div>
         <div class="form-row">
           <div class="form-col">
-            <label for="question">问题：</label>
+            <label for="problem">问题：</label>
             <div class="input-box">
-              <FormItem prop="question">
-                <Input v-model="formValidate.question" />
+              <FormItem prop="problem">
+                <Input v-model="formValidate.problem" />
               </FormItem>
             </div>
             <span class="red-point">*</span>
           </div>
           <div class="form-col">
-            <label for="mail">邮箱地址：</label>
+            <label for="email">邮箱地址：</label>
             <div class="input-box">
-              <FormItem prop="mail">
-                <Input v-model="formValidate.mail" />
+              <FormItem prop="email">
+                <Input v-model="formValidate.email" />
               </FormItem>
             </div>
             <span class="red-point">*</span>
@@ -76,33 +76,36 @@
   </div>
 </template>
 <script>
+import { ERR_OK } from 'api/config'
+import { SubmitContent } from 'api/tornado'
+import { successMessage, errorNotice } from 'common/js/dom'
 
 export default {
-  data() {
+  data () {
     return {
       formValidate: {
         name: '',
-        mail: '',
-        tel: '',
-        question: '',
+        email: '',
+        mobile: '',
+        problem: '',
         content: ''
       },
       ruleValidate: {
         name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        tel: [
+        mobile: [
           { required: true, message: '联系电话不能为空', trigger: 'blur' },
           {
             message: '请输入正确的联系电话',
-            type: "number",
+            type: 'number',
             trigger: 'blur',
-            transform(value) {
+            transform (value) {
               let result = Number(value)
-              return result == NaN ? false : result
+              return result === isNaN ? false : result
             }
           }
         ],
-        question: [{ required: true, message: '请输问题' }],
-        mail: [
+        problem: [{ required: true, message: '请输入问题' }],
+        email: [
           { required: true, message: '邮箱地址不能为空', trigger: 'blur' },
           { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }
         ],
@@ -111,7 +114,7 @@ export default {
           {
             message: '字符长度不能小于10',
             trigger: 'blur',
-            transform(value) {
+            transform (value) {
               return value.length < 10 ? false : value
             }
           }
@@ -120,10 +123,18 @@ export default {
     }
   },
   methods: {
-    submitForm(e) {
-      e.preventDefault();
-      alert('提交成功！')
-      // 提交表单逻辑
+    submitForm () {
+      // 提交表单
+      SubmitContent(this.formValidate)
+        .then(res => {
+          if (res.code === ERR_OK) {
+            successMessage(res.msg)
+            this.$refs['formValidate'].resetFields()
+          }
+        })
+        .catch(res => {
+          errorNotice(res.msg)
+        })
     }
   }
 }

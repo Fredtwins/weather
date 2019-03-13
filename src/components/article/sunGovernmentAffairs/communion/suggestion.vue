@@ -8,15 +8,15 @@
       >
         <div class="question-box">
           <div class="content">
-            <span class="name">{{item.question.name}}：</span>{{item.question.content}}
+            <span class="name">{{item.nickname}}：</span>{{item.content}}
           </div>
-          <span class="time">{{item.question.time}}</span>
+          <!--<span class="time">{{item.question.time}}</span>-->
         </div>
         <div class="answer-box">
           <div class="content">
-            <span class="name">{{item.answer.name}}：</span>{{item.answer.content}}
+            <span class="name">气象新闻发言人回复：</span>{{item.reply}}
           </div>
-          <span class="time">{{item.answer.time}}</span>
+          <!--<span class="time">{{item.answer.time}}</span>-->
         </div>
       </div>
     </div>
@@ -72,10 +72,11 @@
               </FormItem>
             </div>
           </div>
-          <img :src="verifyImg" @click="refreshVerifyCode" />
+          <!--<img ref="createCode" :src="verifyImg" @click="refreshVerifyCode" />-->
+          <input type="button" id="checkCode" class="code" @click="createCode" />
           <button
             class="submit-button"
-            @click="submitForm"
+            @click="_submitForm"
           >提交留言</button>
         </div>
       </Form>
@@ -85,20 +86,31 @@
 <script>
 
 import page from '../../common-component/page'
+import { ERR_OK } from 'api/config'
+import { GetSuggestion, SubmitSuggestion } from 'api/tornado'
+import { successMessage, errorNotice } from 'common/js/dom'
 
 export default {
   components: { page },
-  mounted() {
+  mounted () {
     this.setPage(this.$route)
+    this.createCode()
   },
-  beforeRouteUpdate(to, from, next) {
+  beforeRouteUpdate (to, from, next) {
     this.setPage(to)
     next()
   },
-  data() {
+  data () {
+    const validatePassCheck = (rule, value, callback) => {
+      if (value.toLowerCase() === this.code.toLowerCase()) {
+        callback()
+      } else {
+        callback(('请输入正确的验证码'))
+      }
+    }
     return {
-      totalSuggestion: 15,
-      pageSize: 5,
+      totalSuggestion: 1,
+      pageSize: 1,
       currentPage: 1,
       currentList: [],
       verifyImg: require('../../img/verify_code.png'),
@@ -108,17 +120,18 @@ export default {
         content: '',
         code: ''
       },
+      code: '',
       ruleValidate: {
         name: [{ required: true, message: '请输入昵称', trigger: 'blur' }],
         contact: [
           { required: true, message: '联系方式不能为空', trigger: 'blur' },
           {
             message: '请输入正确的联系方式',
-            type: "number",
+            type: 'number',
             trigger: 'blur',
-            transform(value) {
+            transform (value) {
               let result = Number(value)
-              return result == NaN ? false : result
+              return result === isNaN ? false : result
             }
           }
         ],
@@ -127,48 +140,75 @@ export default {
           {
             message: '字符长度不能小于10',
             trigger: 'blur',
-            transform(value) {
+            transform (value) {
               return value.length < 10 ? false : value
             }
           }
         ],
-        code: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
+        code: [
+          { required: true, message: '请输入验证码' },
+          {
+            message: '请输入正确的验证码',
+            trigger: 'blur',
+            validator: validatePassCheck
+          }
+        ]
       }
     }
   },
   methods: {
-    getData(page) {
-      this.currentList = [1, 2, 3, 4, 5].map(item => {
-        return {
-          id: page + item,
-          question: {
-            name: '第' + page + '页提问者' + item,
-            content: '第' + page + '页第' + item + '条问题',
-            time: '2017/4/14 9:15:03'
-          },
-          answer: {
-            name: '第' + page + '页回复者' + item,
-            content: '第' + page + '页第' + item + '条回答',
-            time: '2017/4/14 9:15:03'
-          }
-        }
-      })
+    // 生成验证码
+    createCode () {
+      let code = ''
+      let codeLength = 4
+      let checkCode = document.getElementById('checkCode')
+      let random = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
+      for (let i = 0; i < codeLength; i++) {
+        let charIndex = Math.floor(Math.random() * 36)
+        code += random[charIndex]
+      }
+      this.code = code
+      checkCode.value = this.code
     },
-    pageChange(page) {
-      this.$router.push('/sunGovernmentAffairs/communion/suggestion/' + page)
-    },
-    setPage(route) {
+    setPage (route) {
       let page = parseInt(route.params.page)
       this.currentPage = page
-      this.getData(page)
+      this._getData(page)
     },
-    refreshVerifyCode(){
-      alert('刷新验证码！！！')
+    _getData (page) {
+      GetSuggestion(page)
+        .then(res => {
+          if (res.code === ERR_OK) {
+            let data = res.page
+            this.currentList = data.list
+            this.totalSuggestion = data.totalCount
+            this.pageSize = data.pageSize
+          }
+        })
+        .catch(res => {
+          errorNotice(res.msg)
+        })
     },
-    submitForm(e) {
-      e.preventDefault();
-      alert('提交成功！')
-      // 提交表单逻辑
+    pageChange (page) {
+      this.$router.push('/sunGovernmentAffairs/communion/suggestion/' + page)
+    },
+    _submitForm () {
+      // 提交表单
+      let obj = {
+        nickname: this.formValidate.name,
+        content: this.formValidate.content
+      }
+      SubmitSuggestion(obj)
+        .then(res => {
+          if (res.code === ERR_OK) {
+            successMessage(res.msg)
+            this.$refs['formValidate'].resetFields()
+            this._getData(this.currentPage)
+          }
+        })
+        .catch(res => {
+          errorNotice(res.msg)
+        })
     }
   }
 }
@@ -262,6 +302,11 @@ export default {
         margin-top: 5px;
         display: inline-block;
         cursor: pointer;
+      }
+      .code{
+        width: 80px;
+        line-height: 26px;
+        font-size: 13.333px;
       }
       .submit-button {
         width: 66px;

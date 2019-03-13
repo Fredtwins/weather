@@ -1,29 +1,38 @@
 <template>
   <div class="tornado-introduce">
-    <span class="title">{{title}}</span>
+    <!--<span class="title">{{title}}</span>-->
     <span class="content" v-html="content"></span>
+    <img src="../img/tornado.jpg"/>
   </div>
 </template>
 <script>
-// 本地预报
 
-import axios from "axios"
-import * as api from 'api/config'
+import { GetTornado } from 'api/tornado'
+import { ERR_OK } from 'api/config'
+import { errorNotice } from 'common/js/dom'
 
 export default {
-  mounted() {
-    axios.get(api.request_organizationSynopsis).then(res => {
-      if (res.status == 200 && res.data) {
-        const result = res.data.articleList[0]
-        this.content = result.content
-        this.title = result.title
-      }
-    })
+  mounted () {
+    this._GetTornado()
   },
-  data() {
+  data () {
     return {
-      content: '',
-      title: ''
+      title: '佛山市龙卷风研究中心',
+      content: ''
+    }
+  },
+  methods: {
+    _GetTornado () {
+      GetTornado()
+        .then(res => {
+          if (res.code === ERR_OK) {
+            let data = res.articleList[0].content
+            this.content = data
+          }
+        })
+        .catch(res => {
+          errorNotice(res.msg)
+        })
     }
   }
 }
