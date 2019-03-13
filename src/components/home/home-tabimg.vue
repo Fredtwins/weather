@@ -13,17 +13,44 @@
       </div>
       <div class="bottomimg">
         <ul>
-          <li :class="[flag===1?'tabon':'']">实景</li>
-          <li :class="[flag===2?'tabon':'']">雷达</li>
-          <li :class="[flag===3?'tabon':'']">云图</li>
-          <li :class="[flag===4?'tabon':'']">台风</li>
-          <li :class="[flag===5?'tabon':'']">预警</li>
-          <li :class="[flag===6?'tabon':'']">地址</li>
+          <li :class="[flag===1?'tabon':'']" @click="ClickFlagtab(1)">实景</li>
+          <li :class="[flag===2?'tabon':'']" @click="ClickFlagtab(2)">雷达</li>
+          <li :class="[flag===3?'tabon':'']" @click="ClickFlagtab(3)">云图</li>
+          <li :class="[flag===4?'tabon':'']" @click="ClickFlagtab(4)">台风</li>
+          <li :class="[flag===5?'tabon':'']" @click="ClickFlagtab(5)">预警</li>
+          <li :class="[flag===6?'tabon':'']" @click="ClickFlagtab(6)">地址</li>
         </ul>
       </div>
     </div>
     <div class="footer-tabspan">
-
+      <div class="spantab">
+        <ul>
+          <li>
+            <a href="#">空气指数</a>
+          </li>
+          <li>
+            <a href="#">洗车指数</a>
+          </li>
+          <li>
+            <a href="#">紫外线指数</a>
+          </li>
+          <li>
+            <a href="#">晨练指数</a>
+          </li>
+          <li>
+            <a href="#">雨具指数</a>
+          </li>
+          <li>
+            <a href="#">穿衣指数</a>
+          </li>
+          <li>
+            <a href="#">郊游指数</a>
+          </li>
+          <li>
+            <a href="#">人体舒适度</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -66,7 +93,12 @@ export default {
           this.flag = 1
         }
         this.flagimg = this.flag
-      }, 2000)
+      }, 3000)
+    },
+    // 点击切换
+    ClickFlagtab (flag) {
+      this.flag = flag
+      this.flagimg = this.flag
     }
   },
   mounted () {
@@ -116,6 +148,7 @@ export default {
           line-height: 34px;
           text-align: center;
           border: 1px solid #eee;
+          cursor: pointer;
         }
         > .tabon {
           background-color: #0055c2;
@@ -125,7 +158,26 @@ export default {
     }
   }
   > .footer-tabspan {
-
+    width: 100%;
+    > .spantab {
+      width: 100%;
+      > ul {
+        > li {
+          width: 24%;
+          display: inline-block;
+          text-align: center;
+          background: url('./img/hjbg.jpg')no-repeat;
+          margin-bottom: 6px;
+          margin-top: 6px;
+          > a {
+            width: 82px;
+            height: 28px;
+            margin-bottom: 6px;
+            line-height: 28px;
+          }
+        }
+      }
+    }
   }
 }
 </style>
