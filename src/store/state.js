@@ -21,24 +21,31 @@ const state = {
   RESJUMPPATH: '',
   navList: [{
     title: '天气预报',
-    path: '/forecast',
-    name: 'forecast',
+    path: '/weatherForecast',
+    name: 'weatherForecast',
     children: [{
-      path: '/forecast/refine',
+      path: '/weatherForecast/refine',
       name: 'refine',
       title: '精细化预报',
       icon: require('components/article/img/content-nav/L1_2.png'),
       iconCurrent: require('components/article/img/content-nav/L1_2_2.png')
     },
     {
-      path: '/forecast/scenicSpot',
+      path: '/weatherForecast/town',
+      name: 'town',
+      title: '乡镇天气预报',
+      icon: require('components/article/img/content-nav/L1_13.png'),
+      iconCurrent: require('components/article/img/content-nav/L1_13_2.png')
+    },
+    {
+      path: '/weatherForecast/scenicSpot',
       name: 'scenicSpot',
       title: '景区预报',
       icon: require('components/article/img/content-nav/L2_9.png'),
       iconCurrent: require('components/article/img/content-nav/L2_9_2.png')
     },
     {
-      path: '/forecast/local',
+      path: '/weatherForecast/local',
       name: 'local',
       title: '本地预报',
       icon: require('components/article/img/content-nav/L1_3.png'),
@@ -46,47 +53,46 @@ const state = {
     },
     {
       name: 'internal',
-      path: '/forecast/internal',
+      path: '/weatherForecast/internal',
       title: '国内七日预报',
       icon: require('components/article/img/content-nav/L1_4.png'),
       iconCurrent: require('components/article/img/content-nav/L1_4_2.png')
     },
     {
       name: 'environment',
-      path: '/forecast/environment',
+      path: '/weatherForecast/environment',
       title: '环境气象',
       icon: require('components/article/img/content-nav/L1_5.png'),
       iconCurrent: require('components/article/img/content-nav/L1_5_2.png')
     },
     {
       name: 'weatherReport',
-      path: '/forecast/weatherReport',
+      path: '/weatherForecast/weatherReport',
       title: '天气报告',
       icon: require('components/article/img/content-nav/L4_2.png'),
       iconCurrent: require('components/article/img/content-nav/L4_2_2.png')
     },
     {
       name: 'weatherNews',
-      path: '/forecast/weatherNews',
+      path: '/weatherForecast/weatherNews',
       title: '天气消息',
       icon: require('components/article/img/content-nav/L1_8.png'),
       iconCurrent: require('components/article/img/content-nav/L1_8_2.png')
     },
     {
       name: 'weatherVideo',
-      path: '/forecast/weatherVideo',
+      path: '/weatherForecast/weatherVideo',
       title: '天气视频',
       icon: require('components/article/img/content-nav/L1_10.png'),
       iconCurrent: require('components/article/img/content-nav/L1_10_2.png')
     },
     {
       name: 'traffic',
-      path: '/forecast/traffic',
+      path: '/weatherForecast/traffic',
       title: '道路交通预报',
       icon: require('components/article/img/content-nav/L1_7.png'),
       iconCurrent: require('components/article/img/content-nav/L1_7_2.png')
     }
-  ],
     ]
   },
   {
@@ -95,6 +101,12 @@ const state = {
     name: 'monitor',
     children: [
       {
+        name: 'awshou',
+        path: '/monitor/awshou',
+        title: '自动站',
+        icon: require('components/article/img/content-nav/L1_7.png'),
+        iconCurrent: require('components/article/img/content-nav/L1_7_2.png')
+      }, {
         name: 'cloud',
         path: '/monitor/cloud',
         title: '卫星云图',
@@ -107,20 +119,14 @@ const state = {
         icon: require('components/article/img/content-nav/L1_7.png'),
         iconCurrent: require('components/article/img/content-nav/L1_7_2.png')
       }, {
-        name: 'xradar',
-        path: '/monitor/xradar',
-        title: 'X波段雷达图',
-        icon: require('components/article/img/content-nav/L1_7.png'),
-        iconCurrent: require('components/article/img/content-nav/L1_7_2.png')
-      }, {
-        name: 'awshou',
-        path: '/monitor/awshou',
-        title: '自动站',
-        icon: require('components/article/img/content-nav/L1_7.png'),
-        iconCurrent: require('components/article/img/content-nav/L1_7_2.png')
-      }
-    ]
-  }, {
+        name: 'tlnp',
+        path: '/monitor/tlnp',
+        title: 'T-LnP',
+        icon: require('components/article/img/content-nav/L2_13.png'),
+        iconCurrent: require('components/article/img/content-nav/L2_13_2.png')
+      }]
+  },
+  {
     title: '应急预警',
     path: '/warning',
     name: 'warning',
