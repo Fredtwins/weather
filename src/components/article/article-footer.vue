@@ -2,7 +2,7 @@
   <div class="article-footer-body">
     <div class="inside">
       <div class="copyright-area">
-        <span>Copyright © 2002-2017 by Foshan Meteorological Service All Rights Reserved</span>
+        <span>{{copyright}}</span>
         <span>建议使用1280×1024分辨率</span>
       </div>
       <div class="focus-area">
@@ -21,7 +21,13 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  computed:{
+    copyright(){
+      return this.$store.state.initData.website.statement
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

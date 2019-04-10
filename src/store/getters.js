@@ -47,3 +47,7 @@ export const STATUS = state => state.STATUS
 export const STTUS = state => state.STTUS
 
 export const TIMEOUT = state => state.TIMEOUT
+
+export const CANVASTEN = state => state.CANVASTEN
+
+export const CANVASFIVE = state => state.CANVASFIVE

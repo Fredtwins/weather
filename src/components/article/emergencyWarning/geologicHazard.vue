@@ -1,5 +1,4 @@
 <template>
-  <!-- 地质灾害预警-->
   <div class="warning-disaster">
     <img :src="img" />
     <div class="desc-box">
@@ -9,29 +8,12 @@
   </div>
 </template>
 <script>
-import { getGeologicHazard } from 'api/article'
-import { ERR_OK } from 'api/config'
-import { errorNotice } from 'common/js/dom'
+// 地质灾害预警
 export default {
-  data () {
+  data() {
     return {
       img: '/dzzh/zhWeb20190127.jpg',
       content: '2019年1月27日预警信息：预计未来24小时(1月27日20时-1月28日20时)，无地质灾害预报预警。'
-    }
-  },
-  mounted () {
-    this._getGeologicHazard()
-  },
-  methods: {
-    _getGeologicHazard () {
-      getGeologicHazard().then(res => {
-        if (res.code === ERR_OK) {
-          this.img = res.data.pictureUrl
-          this.content = res.data.content
-        }
-      }).catch(res => {
-        errorNotice(res.msg)
-      })
     }
   }
 }

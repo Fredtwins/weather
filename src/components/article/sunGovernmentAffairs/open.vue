@@ -1,19 +1,43 @@
 <template>
   <div class="affairs-public">
-    <div class="nav-area" v-if="type === 'list'">
+    <div
+      class="nav-area"
+      v-if="type == 'list'"
+    >
       <router-link
         v-for="(item,index) in navList"
-        :class="['nav-button',{'first':index === 0},{'current':item.name === current}]"
-        :key="'nav-'+item.name" :to="'/sunGovernmentAffairs/open/'+item.name"
+        :class="['nav-button',{'first':index==0},{'current':item.name == current}]"
+        :key="'nav-'+item.name"
+        :to="'/sunGovernmentAffairs/open/'+item.name"
       >{{item.title}}</router-link>
     </div>
-    <router-view :path="path" :content-name="contentName" :list-type="current==='news'?'public_carousel':'public'"/>
+    <router-view
+      :path='path'
+      :content-name="contentName"
+      :list-type="current=='news'?'public_carousel':'public'"
+    />
   </div>
 </template>
 <script>
 
 export default {
-  data () {
+  mounted() {
+    let current = this.$route.params.current
+    this.current = current
+    this.path = '/sunGovernmentAffairs/open/' + current
+    this.contentName = this.classMap[current]
+  },
+  updated() {
+    this.type = this.$route.name == 'sunGovernmentAffairs_open_content' ? 'content' : 'list'
+  },
+  beforeRouteUpdate(to, from, next) {
+    let current = to.params.current
+    this.current = current
+    this.path = '/sunGovernmentAffairs/open/' + current
+    this.contentName = this.classMap[current]
+    next()
+  },
+  data() {
     return {
       classMap: {
         responsibility: '政务公开_机构职能',
@@ -50,21 +74,8 @@ export default {
       ]
     }
   },
-  mounted () {
-    let current = this.$route.params.current
-    this.current = current
-    this.path = '/sunGovernmentAffairs/open'
-    this.contentName = this.classMap[current]
-  },
-  updated () {
-    this.type = this.$route.name === 'sunGovernmentAffairs_open_content' ? 'content' : 'list'
-  },
-  beforeRouteUpdate(to, from, next) {
-    let current = to.params.current
-    this.current = current
-    this.path = '/sunGovernmentAffairs/open/' + current
-    this.contentName = this.classMap[current]
-    next()
+  methods: {
+
   }
 }
 </script>

@@ -6,12 +6,13 @@
 <script>
 
 export default {
-  data () {
+  data(){
     return {
-      path: '/sunGovernmentAffairs/news',
-      name: '气象新闻'
+      path:'/sunGovernmentAffairs/news',
+      name:'气象新闻'
     }
   }
+ 
 }
 </script>
 <style lang="scss" scoped>

@@ -6,12 +6,13 @@
 <script>
 
 export default {
-  data () {
+  data(){
     return {
-      path: '/sunGovernmentAffairs/notice',
-      name: '通知公告'
+      path:'/sunGovernmentAffairs/notice',
+      name:'通知公告'
     }
   }
+ 
 }
 </script>
 <style lang="scss" scoped>

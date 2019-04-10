@@ -1,17 +1,18 @@
 <template>
   <div class="forecast-weather-report">
-    <router-view :path="path" :contentName="name"/>
+    <router-view :path="path" :contentName="name" />
   </div>
 </template>
 <script>
 
 export default {
-  data () {
+  data(){
     return {
-      path: '/weatherForecast/report',
-      name: '天气报告'
+      path:'/weatherForecast/report',
+      name:'天气报告'
     }
   }
+ 
 }
 </script>
 <style lang="scss" scoped>

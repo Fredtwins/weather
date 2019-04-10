@@ -1,6 +1,10 @@
 <template>
   <div class="affairs-communication-research">
-    <router-view :path="path" list-type="public" :content-name="name"/>
+    <router-view
+      path="/sunGovernmentAffairs/communion/research"
+      list-type="public"
+      content-name="网上调查"
+    />
   </div>
 </template>
 <script>
@@ -8,8 +12,7 @@
 export default {
   data() {
     return {
-      path: '/sunGovernmentAffairs/communion/research',
-      name: '网上调查'
+      researchList: []
     }
   }
 }

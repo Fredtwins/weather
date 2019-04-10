@@ -31,3 +31,7 @@ export const SET_STTUS = 'SET_STTUS'
 export const SET_TIMEOUT = 'SET_TIMEOUT'
 
 export const SET_RESJUMPPATH = 'SET_RESJUMPPATH'
+
+export const SET_CANVASTEN = 'SET_CANVASTEN'
+
+export const SET_CANVASFIVE = 'SET_CANVASFIVE'

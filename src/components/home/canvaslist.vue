@@ -6,6 +6,7 @@
 
 <script>
 import $ from "jquery"
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   data () {
@@ -13,10 +14,21 @@ export default {
 
     }
   },
+  computed: {
+    ...mapGetters([
+      'CANVASFIVE'
+    ])
+  },
   methods: {
     _getlist () {
+      var _this = this
       $(function() {
-        console.log(1)
+        var tmaxarr = []
+        var tminarr = []
+        for (var i = 0; i < _this.CANVASFIVE.nDay.length; i++) {
+          tmaxarr.push((parseInt(_this.CANVASFIVE.nDay[i].tmax)))
+          tminarr.push((parseInt(_this.CANVASFIVE.nDay[i].tmin)))
+        }
         //温度走势图start
         var forecast = new Array();
 				forecast[0] = new Array();
@@ -35,39 +47,38 @@ export default {
 				forecast[13] = new Array();
 				forecast[14] = new Array();
 
-				forecast[0]["high"] = 23;
-				forecast[0]["low"] = 11;
-				forecast[1]["high"] = 23;
-				forecast[1]["low"] = 11;
-				forecast[2]["high"] = 34;
-				forecast[2]["low"] = 13;
-				forecast[3]["high"] = 23;
-				forecast[3]["low"] = 11;
-				forecast[4]["high"] = 27;
-				forecast[4]["low"] = 15;
-				forecast[5]["high"] = 22;
-				forecast[5]["low"] = 11;
-				forecast[6]["high"] = 23;
-				forecast[6]["low"] = 11;
-				forecast[7]["high"] = 34;
-				forecast[7]["low"] = 13;
-				forecast[8]["high"] = 23;
-				forecast[8]["low"] = 11;
-				forecast[9]["high"] = 27;
-        forecast[9]["low"] = 15;
-        forecast[10]["high"] = 22;
-				forecast[10]["low"] = 11;
-				forecast[11]["high"] = 23;
-				forecast[11]["low"] = 11;
-				forecast[12]["high"] = 34;
-				forecast[12]["low"] = 13;
-				forecast[13]["high"] = 23;
-				forecast[13]["low"] = 11;
-				forecast[14]["high"] = 27;
-				forecast[14]["low"] = 15;
+				forecast[0]["high"] = tmaxarr[0];
+				forecast[0]["low"] = tminarr[0];
+				forecast[1]["high"] = tmaxarr[1];
+				forecast[1]["low"] = tminarr[1];
+				forecast[2]["high"] = tmaxarr[2];
+				forecast[2]["low"] = tminarr[2];
+				forecast[3]["high"] = tmaxarr[3];
+				forecast[3]["low"] = tminarr[3];
+				forecast[4]["high"] = tmaxarr[4];
+				forecast[4]["low"] = tminarr[4];
+				forecast[5]["high"] = tmaxarr[5];
+				forecast[5]["low"] = tminarr[5];
+				forecast[6]["high"] = tmaxarr[6];
+				forecast[6]["low"] = tminarr[6];
+				forecast[7]["high"] = tmaxarr[7];
+				forecast[7]["low"] = tminarr[7];
+				forecast[8]["high"] = tmaxarr[8];
+				forecast[8]["low"] = tminarr[8];
+				forecast[9]["high"] = tmaxarr[9];
+        forecast[9]["low"] = tminarr[9];
+        forecast[10]["high"] = tmaxarr[10];
+				forecast[10]["low"] = tminarr[10];
+				forecast[11]["high"] = tmaxarr[11];
+				forecast[11]["low"] = tminarr[11];
+				forecast[12]["high"] = tmaxarr[12];
+				forecast[12]["low"] = tminarr[12];
+				forecast[13]["high"] = tmaxarr[13];
+				forecast[13]["low"] = tminarr[13];
+				forecast[14]["high"] = tmaxarr[14];
+				forecast[14]["low"] = tminarr[14];
         var maxTemp = forecast[0]["high"];
         var minTemp = forecast[0]["low"];
-        console.log(forecast)
 
         var high_tep_arr = [];
         for (var x = 0; x < forecast.length; x++) {
@@ -154,6 +165,9 @@ export default {
     }
   },
   created () {
+
+  },
+  mounted () {
     this._getlist()
   }
 }

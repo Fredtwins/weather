@@ -72,23 +72,23 @@ export default {
       carouselList: [
         {
           img: require('../img/public_news/20171131400.jpg'),
-          path: '/affairs/public/news/content/news1',
+          path: '/sunGovernmentAffairs/open/news/content/news1',
           title: '省气象局党组书记、局长庄旭东到佛山检查指导汛期气象服务'
         }, {
           img: require('../img/public_news/20171133824.jpg'),
-          path: '/affairs/public/news/content/news2',
+          path: '/sunGovernmentAffairs/open/news/content/news2',
           title: '省气象局副局长赵会强到佛山市气象局调研指导工作'
         }, {
           img: require('../img/public_news/20178257262.jpg'),
-          path: '/affairs/public/news/content/news3',
+          path: '/sunGovernmentAffairs/open/news/content/news3',
           title: '省气象局局长庄旭东调研指导南海区气象工作'
         }, {
           img: require('../img/public_news/20186217351.jpg'),
-          path: '/affairs/public/news/content/news4',
+          path: '/sunGovernmentAffairs/open/news/content/news4',
           title: '佛山开展龙卷等致灾性强对流天气气象灾害应急演练'
         }, {
           img: require('../img/public_news/2018873272.jpg'),
-          path: '/affairs/public/news/content/news5',
+          path: '/sunGovernmentAffairs/open/news/content/news5',
           title: '省局副局长曾琮一行莅临佛山气象局考察指导工作'
         }
       ]

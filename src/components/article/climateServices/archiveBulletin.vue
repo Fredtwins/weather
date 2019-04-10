@@ -6,12 +6,13 @@
 <script>
 
 export default {
-  data () {
+  data(){
     return {
-      path: '/climateServices/archiveBulletin',
-      name: '档案公报'
+      path:'/climateServices/archiveBulletin',
+      name:'档案公报'
     }
   }
+ 
 }
 </script>
 <style lang="scss" scoped>

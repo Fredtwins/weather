@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      current: 'suggestion',
+      current: 'research',
       navList: [{
         type: 'content',
         name: 'research',
@@ -45,7 +45,7 @@ export default {
       }, {
         type: 'content',
         name: 'suggestion',
-        title: '意见征集'
+        title: '意见征集',
       }, {
         type: 'link',
         path: 'http://wz.foshan.gov.cn/wlfyr/zyszfsdw/sqxj/',

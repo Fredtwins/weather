@@ -36,22 +36,31 @@
         <div class="bottom">
           <div
             v-for="(item,index) in navList"
-            :key="item.path"
+            :key="'/'+item.alias"
             class="nav-box"
           >
             <router-link
-              :class="['button', {'first':index == 0}, {'current':item.name == current}]"
-              :to="item.path"
-            >{{item.title}}</router-link>
-            <ul class="children-list">
+              v-if="item.type==2"
+              :class="['button', {'first':index == 0}, {'current':item.alias == current}]"
+              :to="'/'+item.alias"
+            >{{item.name}}</router-link>
+            <span
+              v-else-if="item.type==1"
+              :class="['button', {'first':index == 0}, {'current':item.alias == current}]"
+            >{{item.name}}</span>
+            <ul
+              class="children-list"
+              v-if="item.children && item.children.length>0"
+            >
               <li
                 v-for="childItem in item.children"
-                :key="'child-'+childItem.path"
+                :key="'child-'+childItem.jumpUrl"
               >
                 <router-link
+                  v-if="childItem.jumpType ==2"
                   class="children-link"
-                  :to="childItem.path"
-                >{{childItem.title}}</router-link>
+                  :to="childItem.jumpUrl"
+                >{{childItem.name}}</router-link>
               </li>
             </ul>
           </div>

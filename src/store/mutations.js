@@ -66,8 +66,13 @@ const mutations = {
   },
   [types.SET_RESJUMPPATH] (state, str) {
     state.RESJUMPPATH = str
+  },
+  [types.SET_CANVASTEN] (state, arr) {
+    state.CANVASTEN = arr
+  },
+  [types.SET_CANVASFIVE] (state, arr) {
+    state.CANVASFIVE = arr
   }
-
 }
 
 export default mutations

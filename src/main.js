@@ -33,7 +33,6 @@ Vue.use(iView)
 // Vue.use(vueAMap)
 Vue.use(VideoPlayer)
 Vue.use(vueQuillEditor)
-
 Vue.prototype.$ol = ol
 Vue.ol = ol
 

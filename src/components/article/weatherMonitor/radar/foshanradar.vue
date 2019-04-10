@@ -7,7 +7,7 @@
           <Select
             v-model="model2"
             size="small"
-            style="width:127px"
+            style="width:100px"
             @on-change="autopalychange">
               <Option v-for="item in cityList" :value="item.value" :key="item.index">{{ item.value }}</Option>
           </Select>
@@ -217,32 +217,21 @@ export default {
         height: 110px;
         margin-top: 8px;
         margin-left: 30px;
-        padding: 8px 0 0 14px;
+        padding-top: 8px;
         background-color: #123a7b;
+        text-align: center;
         > p {
           color: #fff;
-          font-size: 14px;
+          font-size: 12px;
           display: inline-block;
           margin-right: 2px;
         }
         > span {
           color: #fff;
-          font-size: 14px;
+          font-size: 12px;
           display: inline-block;
           padding-top: 12px;
           margin-right: 56px;
-        }
-        > .ivu-select{
-          height: 28px;
-          > .ivu-select-selection{
-            height: 28px;
-            background-color: #3497fc;
-            color: #fff;
-            border: none;
-            > .ivu-select-placeholder {
-              color: #fff;
-            }
-          }
         }
         > .selectlist {
           padding-top: 4px;

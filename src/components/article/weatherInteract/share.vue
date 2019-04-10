@@ -12,7 +12,7 @@
           <div class="inside">
             <iframe
               v-once
-              :src="httpUrl + item.current"
+              :src="item.current"
               :width="item.width"
               :height="item.height"
               marginwidth="0"
@@ -91,182 +91,183 @@
   </div>
 </template>
 <script>
-import { httpUrl } from 'api/config'
+
 export default {
   mounted() {
     this.pluginList.forEach((item, index) => {
       this.setIframe(index)
     })
   },
-  data () {
+  data() {
     return {
       pluginList: [{
         name: '短时天气预报插件 .......样式1',
         width: 500,
         height: 30,
-        current: '/plugin/Chan_ChengShorttimeForecast1.html',
+        current: '/plugin/GDFSForecastPlugin1.html',
         areaIndex: 0,
         iframe: '',
         area: [
           {
+            name: '佛山',
+            tpl: 'GDFSForecastPlugin1'
+          }, {
             name: '禅城',
-            tpl: 'Chan_ChengShorttimeForecast1'
+            tpl: 'BFFOForecastPlugin1'
           }, {
             name: '南海',
-            tpl: 'Nan_HaiShorttimeForecast1'
+            tpl: 'GDNHForecastPlugin1'
           }, {
             name: '三水',
-            tpl: 'San_ShuiShorttimeForecast1'
+            tpl: 'GDSSForecastPlugin1'
           }, {
             name: '顺德',
-            tpl: 'Shun_DeShorttimeForecast1'
+            tpl: 'GDSDForecastPlugin1'
           }, {
             name: '高明',
-            tpl: 'Gao_MingShorttimeForecast1'
+            tpl: 'GDGMForecastPlugin1'
           }
         ]
       }, {
         name: '短时天气预报插件 .......样式2',
         width: 500,
         height: 180,
-        current: '/plugin/Chan_ChengShorttimeForecast2.html',
+        current: 'plugin/BFFOForecastPlugin2.html',
         areaIndex: 0,
         iframe: '',
         area: [
           {
             name: '禅城',
-            tpl: 'Chan_ChengShorttimeForecast2'
+            tpl: 'BFFOForecastPlugin2'
           }, {
             name: '南海',
-            tpl: 'Nan_HaiShorttimeForecast2'
+            tpl: 'GDNHForecastPlugin2'
           }, {
             name: '三水',
-            tpl: 'San_ShuiShorttimeForecast2'
+            tpl: 'GDSSForecastPlugin2'
           }, {
             name: '顺德',
-            tpl: 'Shun_DeShorttimeForecast2'
+            tpl: 'GDSDForecastPlugin2'
           }, {
             name: '高明',
-            tpl: 'Gao_MingShorttimeForecast2'
+            tpl: 'GDGMForecastPlugin2'
           }
         ]
-      }
-//      }, {
-//        name: '短期天气预报插件 .......样式1',
-//        width: 500,
-//        height: 30,
-//        current: 'plugin/BFFOForecastSevenPlugin1.html',
-//        areaIndex: 0,
-//        iframe: '',
-//        area: [
-//          {
-//            name: '禅城',
-//            tpl: 'BFFOForecastSevenPlugin1'
-//          }, {
-//            name: '南海',
-//            tpl: 'GDNHForecastSevenPlugin1'
-//          }, {
-//            name: '三水',
-//            tpl: 'GDSSForecastSevenPlugin1'
-//          }, {
-//            name: '顺德',
-//            tpl: 'GDSDForecastSevenPlugin1'
-//          }, {
-//            name: '高明',
-//            tpl: 'GDGMForecastSevenPlugin1'
-//          }
-//        ]
-//      }, {
-//        name: '三天天气预报插件',
-//        width: 500,
-//        height: 30,
-//        current: 'plugin/BFFOForecastThreePlugin1.html',
-//        areaIndex: 0,
-//        iframe: '',
-//        area: [
-//          {
-//            name: '禅城',
-//            tpl: 'BFFOForecastThreePlugin1'
-//          }, {
-//            name: '南海',
-//            tpl: 'GDNHForecastThreePlugin1'
-//          }, {
-//            name: '三水',
-//            tpl: 'GDSSForecastThreePlugin1'
-//          }, {
-//            name: '顺德',
-//            tpl: 'GDSDForecastThreePlugin1'
-//          }, {
-//            name: '高明',
-//            tpl: 'GDGMForecastThreePlugin1'
-//          }
-//        ]
-//      }, {
-//        name: '一天天气预报插件',
-//        width: 500,
-//        height: 30,
-//        current: 'plugin/ForecastBFFOOnePlugin.html',
-//        areaIndex: 0,
-//        iframe: '',
-//        area: [
-//          {
-//            name: '禅城',
-//            tpl: 'ForecastBFFOOnePlugin'
-//          }
-//        ]
-//      }, {
-//        name: '短期天气预报插件 .......样式2',
-//        width: 400,
-//        height: 200,
-//        current: 'plugin/BFFOForecastSevenPlugin2.html',
-//        areaIndex: 0,
-//        iframe: '',
-//        area: [
-//          {
-//            name: '禅城',
-//            tpl: 'BFFOForecastSevenPlugin2'
-//          }, {
-//            name: '南海',
-//            tpl: 'GDNHForecastSevenPlugin2'
-//          }, {
-//            name: '三水',
-//            tpl: 'GDSSForecastSevenPlugin2'
-//          }, {
-//            name: '顺德',
-//            tpl: 'GDSDForecastSevenPlugin2'
-//          }, {
-//            name: '高明',
-//            tpl: 'GDGMForecastSevenPlugin2'
-//          }
-//        ]
-//      },{
-//        name: '天气预警插件 .......样式1',
-//        width: 500,
-//        height: 30,
-//        current: 'plugin/warningPlugin1.html',
-//        areaIndex: 0,
-//        iframe: '',
-//        area: [
-//          {
-//            name: '佛山',
-//            tpl: 'warningPlugin1'
-//          }
-//        ]
-//      },{
-//        name: '天气预警插件 .......样式2',
-//        width: 400,
-//        height: 100,
-//        current: 'plugin/warningPlugin2.html',
-//        areaIndex: 0,
-//        iframe: '',
-//        area: [
-//          {
-//            name: '佛山',
-//            tpl: 'warningPlugin2'
-//          }
-//        ]
-//      }]
-      ]
+      }, {
+        name: '短期天气预报插件 .......样式1',
+        width: 500,
+        height: 30,
+        current: 'plugin/BFFOForecastSevenPlugin1.html',
+        areaIndex: 0,
+        iframe: '',
+        area: [
+          {
+            name: '禅城',
+            tpl: 'BFFOForecastSevenPlugin1'
+          }, {
+            name: '南海',
+            tpl: 'GDNHForecastSevenPlugin1'
+          }, {
+            name: '三水',
+            tpl: 'GDSSForecastSevenPlugin1'
+          }, {
+            name: '顺德',
+            tpl: 'GDSDForecastSevenPlugin1'
+          }, {
+            name: '高明',
+            tpl: 'GDGMForecastSevenPlugin1'
+          }
+        ]
+      }, {
+        name: '三天天气预报插件',
+        width: 500,
+        height: 30,
+        current: 'plugin/BFFOForecastThreePlugin1.html',
+        areaIndex: 0,
+        iframe: '',
+        area: [
+          {
+            name: '禅城',
+            tpl: 'BFFOForecastThreePlugin1'
+          }, {
+            name: '南海',
+            tpl: 'GDNHForecastThreePlugin1'
+          }, {
+            name: '三水',
+            tpl: 'GDSSForecastThreePlugin1'
+          }, {
+            name: '顺德',
+            tpl: 'GDSDForecastThreePlugin1'
+          }, {
+            name: '高明',
+            tpl: 'GDGMForecastThreePlugin1'
+          }
+        ]
+      }, {
+        name: '一天天气预报插件',
+        width: 500,
+        height: 30,
+        current: 'plugin/ForecastBFFOOnePlugin.html',
+        areaIndex: 0,
+        iframe: '',
+        area: [
+          {
+            name: '禅城',
+            tpl: 'ForecastBFFOOnePlugin'
+          }
+        ]
+      }, {
+        name: '短期天气预报插件 .......样式2',
+        width: 400,
+        height: 200,
+        current: 'plugin/BFFOForecastSevenPlugin2.html',
+        areaIndex: 0,
+        iframe: '',
+        area: [
+          {
+            name: '禅城',
+            tpl: 'BFFOForecastSevenPlugin2'
+          }, {
+            name: '南海',
+            tpl: 'GDNHForecastSevenPlugin2'
+          }, {
+            name: '三水',
+            tpl: 'GDSSForecastSevenPlugin2'
+          }, {
+            name: '顺德',
+            tpl: 'GDSDForecastSevenPlugin2'
+          }, {
+            name: '高明',
+            tpl: 'GDGMForecastSevenPlugin2'
+          }
+        ]
+      },{
+        name: '天气预警插件 .......样式1',
+        width: 500,
+        height: 30,
+        current: 'plugin/warningPlugin1.html',
+        areaIndex: 0,
+        iframe: '',
+        area: [
+          {
+            name: '佛山',
+            tpl: 'warningPlugin1'
+          }
+        ]
+      },{
+        name: '天气预警插件 .......样式2',
+        width: 400,
+        height: 100,
+        current: 'plugin/warningPlugin2.html',
+        areaIndex: 0,
+        iframe: '',
+        area: [
+          {
+            name: '佛山',
+            tpl: 'warningPlugin2'
+          }
+        ]
+      }]
     }
   },
   methods: {
@@ -274,17 +275,16 @@ export default {
       let target = this.pluginList[index]
       this.pluginList[index].current = '/plugin/' + target.area[target.areaIndex].tpl + '.html'
     },
-    setIframe (index) {
+    setIframe(index) {
       let target = this.pluginList[index]
       this.pluginList[index].iframe = '<iframe src="' +
-        httpUrl +
+        window.location.host +
         target.current +
         '" width="' +
         target.width +
         '" height="' +
         target.height +
         '" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"></iframe>'
-      console.log(this.pluginList[index].iframe)
     },
     chooseCode(index) {
       let target = document.getElementById('code-area' + index)

@@ -3,14 +3,14 @@
     <router-link
       v-for="(item,index) in navList"
       :key="index"
-      :class="['button',{'current':item.name == current}]"
-      :to="item.path"
+      :class="['button',{'current':item.alias == current}]"
+      :to="item.jumpUrl"
     >
       <em>
         <i></i>
-        <img :src="item.name == current?item.iconCurrent:item.icon" />
+        <img :src="item.alias == current?item.iconCurrent:item.icon" />
       </em>
-      <span>{{item.title}}</span>
+      <span>{{item.name}}</span>
     </router-link>
   </div>
 </template>

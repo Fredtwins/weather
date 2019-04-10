@@ -1,33 +1,40 @@
-const weatherMonitor = () =>
-  import ('components/article/weatherMonitor')
+// const weatherMonitor = () =>
+//   import('components/article/weatherMonitor')
 
 const cloud = () =>
-  import ('components/article/weatherMonitor/cloud')
+  import('components/article/weatherMonitor/cloud')
 
 const sRadar = () =>
-  import ('components/article/weatherMonitor/sRadar')
+  import('components/article/weatherMonitor/sRadar')
 
 const xradar = () =>
-  import ('components/article/weatherMonitor/xradar')
+  import('components/article/weatherMonitor/xradar')
 
 // 自动站
 const aws = () =>
-  import ('components/article/weatherMonitor/aws')
+  import('components/article/weatherMonitor/aws')
 
 // 能见度
 const visibility = () =>
-  import ('components/article/weatherMonitor/visibility')
+  import('components/article/weatherMonitor/visibility')
 
 // 天气实景
 const realScene = () =>
-  import ('components/article/weatherMonitor/realScene')
+  import('components/article/weatherMonitor/realScene')
 
 // 台风路径图
 const typhoon = () =>
-  import ('components/article/weatherMonitor/typhoon')
+  import('components/article/weatherMonitor/typhoon')
+
+// 地球此时
+const earthNow = () =>
+  import('components/article/weatherMonitor/earthNow')
 
 const tlnp = () =>
-  import ('components/article/weatherMonitor/tlnp')
+  import('components/article/weatherMonitor/tlnp')
+
+// const earthNow = () =>
+//   import('components/article/weatherMonitor/sugis')
 
 export default [{
   path: '/weatherMonitor',
@@ -60,6 +67,10 @@ export default [{
   path: 'typhoon',
   name: 'typhoon',
   component: typhoon
+}, {
+  path: 'earthNow',
+  name: 'earthNow',
+  component: earthNow
 }, {
   path: 'T-lnP/:id',
   name: 'T-lnP',

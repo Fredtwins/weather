@@ -17,3 +17,12 @@ export function GetCloudList () {
 
   return ajaxGet(url, data)
 }
+
+// 底部友情链接
+export function Getfirend () {
+  let url = 'http://10.0.1.184:8080/mpsp/web/website/content/9'
+
+  let data = {}
+
+  return ajaxGet(url, data)
+}

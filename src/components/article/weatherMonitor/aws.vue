@@ -3,11 +3,11 @@
     <div class="zdzd">
       <!-- 头部 -->
       <div class="zdMenu">
-        <Select v-model="model1" size="large" @on-change="cityChange">
+        <Select v-model="model1" size="large" style="width:100px" @on-change="cityChange">
           <Option v-for="item in showlistArray" :value="item.val" :key="item.index">{{ item.val }}</Option>
         </Select>
         <span :class="[flag==1?'active':'']" style="cursor:pointer" @click="changeclass('table')">表格</span>
-        <span :class="[flag==2?'active':'']" style="cursor:pointer" @click="changeclass('map')">图</span>
+        <span :class="[flag==2?'active':'']" style="cursor:pointer"@click="changeclass('map')">图</span>
       </div>
       <div class="zdMenu-box">
         <div class="zdMenu-left">
@@ -47,7 +47,7 @@
         <div class="zdMenu-right" v-show="flag == 'table'">
           <Table :columns="columnsTable"></Table>
         </div>
-        <div class="zdMenu-right" v-show="flag == 'map'">
+        <div class="zdMenu-right">
           <div>
             <awshouMap :awshouData="awshouData" :currentIndex="currentIndex" />
           </div>
@@ -142,12 +142,12 @@ export default {
     },
     switchTime() {
       // alert(this.value2)
-//      console.log(this.value2[this.value2.length-1])
+      console.log(this.value2[this.value2.length-1])
       switch (this.value2[this.value2.length-1]) {
         case '1':
           // alert(1)
           this.awshouData = weaterData.data;
-//          console.log(this.awshouData, 909090)
+          console.log(this.awshouData, 909090)
           break;
         case '2':
           // alert(2)
@@ -175,25 +175,6 @@ export default {
       margin: 0 auto 0;
       color: #000;
       padding-top: 16px;
-      > .ivu-select {
-        width: 121px;
-        > .ivu-select-selection {
-          background-color: #025bc4;
-          color: #fff;
-          font-weight: bold;
-          height: 37px;
-          -webkit-border-radius: 0;
-          -moz-border-radius: 0;
-          border-radius: 0;
-          > .ivu-select-selected-value{
-            height: 37px;
-            line-height: 37px;
-            text-align: center;
-            font-size: 12px;
-            font-family: '宋体';
-          }
-        }
-      }
       > span {
         width: 121px;
         height: 37px;
@@ -219,7 +200,6 @@ export default {
     width: 160px;
     border: 1px solid #025bc4;
     padding: 1px;
-    font-size: 14px;
     .ivu-collapse-header{
       background-color: #025bc4 !important;
       color: #fff;
@@ -232,7 +212,7 @@ export default {
       }
       .ivu-icon {
         position: absolute;
-        right: 0px;
+        right: 24px;
         top: 0px;
         line-height: 38px;
         font-size: 16px;

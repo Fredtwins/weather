@@ -1,26 +1,54 @@
 <template>
   <div class="interaction-equipment">
     <div v-if="!status" class="list">
-      <div v-for="(item,index) in equipmentList" :key="item.id" class="equipment-box">
-        <div v-if="(index % 2) === 0" class="odd">
-          <img :src="item.imageUrl" :alt="item.title"/>
+      <div
+        v-for="(item,index) in equipmentList"
+        :key="item.id"
+        class="equipment-box"
+      >
+        <div
+          v-if="(index % 2) == 0"
+          class="odd"
+        >
+          <img
+            :src="item.img"
+            :alt="item.title"
+          />
           <div class="content">
-            <router-link class="title" :to="path+item.id">{{item.title}}</router-link>
-            <div class="text" v-html="item.content"></div>
+            <router-link
+              class="title"
+              :to="'/weatherInteract/equipmentIntroduce/detail/'+item.id"
+            >{{item.title}}</router-link>
+            <div class="text">{{item.desc}}</div>
             <div class="bottom">
-              <router-link class="more" :to="path+item.id">MORE></router-link>
+              <router-link
+                class="more"
+                :to="'/weatherInteract/equipmentIntroduce/detail/'+item.id"
+              >MORE></router-link>
             </div>
           </div>
         </div>
-        <div v-else class="even">
+        <div
+          v-else
+          class="even"
+        >
           <div class="content">
-            <router-link class="title" :to="path+item.id">{{item.title}}</router-link>
-            <div class="text" v-html="item.content"></div>
+            <router-link
+              class="title"
+              :to="'/weatherInteract/equipmentIntroduce/detail/'+item.id"
+            >{{item.title}}</router-link>
+            <div class="text">{{item.desc}}</div>
             <div class="bottom">
-              <router-link class="more" :to="path+item.id">MORE></router-link>
+              <router-link
+                class="more"
+                :to="'/weatherInteract/equipmentIntroduce/detail/'+item.id"
+              >MORE></router-link>
             </div>
           </div>
-          <img :src="item.imageUrl" :alt="item.title"/>
+          <img
+            :src="item.img"
+            :alt="item.title"
+          />
         </div>
       </div>
     </div>
@@ -28,42 +56,23 @@
   </div>
 </template>
 <script>
-import { getEquipmentData } from 'api/article'
-import { ERR_OK } from 'api/config'
-import { errorNotice, getLocalStorage } from 'common/js/dom'
-import { changeTimeForm } from 'common/js/util'
 
 export default {
-  mounted () {
+  mounted() {
     this.setStatus(this.$route)
-    this._getEquipmentData()
   },
   beforeRouteUpdate(to, from, next) {
     this.setStatus(to)
     next()
   },
   methods: {
-    setStatus (route) {
-      this.status = route.name === 'weatherInteract_equipmentIntroduce_detail'
-    },
-    _getEquipmentData () {
-      getEquipmentData().then(res => {
-        if (res.code === ERR_OK && res.data) {
-          res.data.map(item => {
-            let date = new Date(Date.parse(new Date(item.publishtime)))
-            item.publishtime = changeTimeForm(date)
-          })
-          this.equipmentList = res.data
-          getLocalStorage('list', JSON.stringify(this.equipmentList))
-        }
-      }).catch(res => {
-        errorNotice(res.msg)
-      })
+    setStatus(route) {
+      this.status = route.name == 'weatherInteract_equipmentIntroduce_detail'
     }
   },
   data() {
     return {
-      path: '/weatherInteract/equipmentIntroduce/detail/',
+      path: '/weatherInteract/equipmentIntroduce',
       name: '观测场设备介绍',
       status: '',
       equipmentList: [
@@ -112,6 +121,7 @@ export default {
       ]
     }
   }
+
 }
 </script>
 <style lang="scss" scoped>

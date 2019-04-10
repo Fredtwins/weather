@@ -6,12 +6,13 @@
 <script>
 
 export default {
-  data () {
+  data(){
     return {
-      path: '/tornadoResearch/scienceInformation',
-      name: '科普资讯'
+      path:'/tornadoResearch/scienceInformation',
+      name:'科普资讯'
     }
   }
+ 
 }
 </script>
 <style lang="scss" scoped>

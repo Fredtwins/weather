@@ -6,12 +6,13 @@
 <script>
 
 export default {
-  data () {
+  data(){
     return {
-      path: '/polularScience/polularScience',
-      name: '气象科普'
+      path:'/polularScience/polularScience',
+      name:'气象科普'
     }
   }
+ 
 }
 </script>
 <style lang="scss" scoped>

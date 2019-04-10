@@ -59,7 +59,6 @@
           </div>
         </div>
         <div>
-          <label for="content">内容：</label>
           <div class="form-content">
             <FormItem prop="content">
               <Input
@@ -78,7 +77,7 @@
 </template>
 <script>
 import { ERR_OK } from 'api/config'
-import { SubmitContent } from 'api/article'
+import { SubmitContent } from 'api/tornado'
 import { successMessage, errorNotice } from 'common/js/dom'
 
 export default {

@@ -6,6 +6,7 @@
 
 <script>
 import $ from "jquery"
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   data () {
@@ -13,12 +14,23 @@ export default {
 
     }
   },
+  computed: {
+    ...mapGetters([
+      'CANVASTEN'
+    ])
+  },
   methods: {
     // 显示canvas图
     _getcanvasList () {
       var _this = this
       $(function() {
         //温度走势图start
+        var tmaxarr = []
+        var tminarr = []
+        for (var i = 0; i < _this.CANVASTEN.nDay.length; i++) {
+          tmaxarr.push((parseInt(_this.CANVASTEN.nDay[i].tmax)))
+          tminarr.push((parseInt(_this.CANVASTEN.nDay[i].tmin)))
+        }
         var forecast = new Array();
         forecast[0] = new Array();
         forecast[1] = new Array();
@@ -31,26 +43,26 @@ export default {
         forecast[8] = new Array();
         forecast[9] = new Array();
 
-        forecast[0]["high"] = 22;
-        forecast[0]["low"] = 11;
-        forecast[1]["high"] = 23;
-        forecast[1]["low"] = 11;
-        forecast[2]["high"] = 34;
-        forecast[2]["low"] = 13;
-        forecast[3]["high"] = 23;
-        forecast[3]["low"] = 11;
-        forecast[4]["high"] = 27;
-        forecast[4]["low"] = 15;
-        forecast[5]["high"] = 22;
-        forecast[5]["low"] = 11;
-        forecast[6]["high"] = 23;
-        forecast[6]["low"] = 11;
-        forecast[7]["high"] = 34;
-        forecast[7]["low"] = 13;
-        forecast[8]["high"] = 23;
-        forecast[8]["low"] = 11;
-        forecast[9]["high"] = 27;
-        forecast[9]["low"] = 15;
+        forecast[0]["high"] = tmaxarr[0];
+        forecast[0]["low"] = tminarr[0];
+        forecast[1]["high"] = tmaxarr[1];
+        forecast[1]["low"] = tminarr[1];
+        forecast[2]["high"] = tmaxarr[2];
+        forecast[2]["low"] = tminarr[2];
+        forecast[3]["high"] = tmaxarr[3];
+        forecast[3]["low"] = tminarr[3];
+        forecast[4]["high"] = tmaxarr[4];
+        forecast[4]["low"] = tminarr[4];
+        forecast[5]["high"] = tmaxarr[5];
+        forecast[5]["low"] = tminarr[5];
+        forecast[6]["high"] = tmaxarr[6];
+        forecast[6]["low"] = tminarr[6];
+        forecast[7]["high"] = tmaxarr[7];
+        forecast[7]["low"] = tminarr[7];
+        forecast[8]["high"] = tmaxarr[8];
+        forecast[8]["low"] = tminarr[8];
+        forecast[9]["high"] = tmaxarr[9];
+        forecast[9]["low"] = tminarr[9];
         // console.log(forecast)
         var maxTemp = forecast[0]['high'];
         var minTemp = forecast[0]['low'];
@@ -83,7 +95,7 @@ export default {
         var new_high_y = [];
 
         function draw_line(a, high_color_line) {
-          console.log(a)
+          // console.log(a)
           new_high_x = [];
           new_high_y = [];
           for (var j = 0; j < a.length; j++) { //a温度数组
@@ -137,7 +149,12 @@ export default {
     }
   },
   created () {
-    this._getcanvasList()
+
+  },
+  mounted () {
+    setTimeout(() => {
+      this._getcanvasList()
+    }, 40)
   }
 }
 </script>

@@ -25,33 +25,28 @@
   </div>
 </template>
 <script>
-  import { getWeatherVideo } from 'api/article'
-  import { ERR_OK } from 'api/config'
-  import { errorNotice } from 'common/js/dom'
-  export default {
-    data () {
-      return {
-        videoList: []
+import axios from 'axios'
+
+export default {
+  mounted() {
+    axios.get('/video/dat.js').then(res => {
+      if (res.status == 200 && res.data) {
+        let data = [{ title: '<<建设气象现代化强市专题宣传片>> (中英)', img: require('../img/video-poster.jpg') }, ...res.data.data]
+        this.videoList = data
       }
-    },
-    mounted () {
-      this._getWeatherVideo()
-    },
-    methods: {
-      playVideo (index) {
-        index === 0 && document.getElementById('video-player').play()
-      },
-      _getWeatherVideo () {
-        getWeatherVideo().then(res => {
-          if (res.code === ERR_OK) {
-            this.videoList = [{ title: '<<建设气象现代化强市专题宣传片>> (中英)', img: require('../img/video-poster.jpg') }, ...res.data]
-          }
-        }).catch(res => {
-          errorNotice(res.msg)
-        })
-      }
+    });
+  },
+  data() {
+    return {
+      videoList: []
+    }
+  },
+  methods: {
+    playVideo(index) {
+      index == 0 && document.getElementById("video-player").play()
     }
   }
+}
 </script>
 <style lang="scss" scoped>
 .clearfloat:after {

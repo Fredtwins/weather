@@ -2,15 +2,15 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // 子路由
-import forecastRouter from './forecast'
-import monitorRouter from './monitor'
-import warningRouter from './warning'
-import serviceRouter from './service'
-import tornadoRouter from './tornado'
-import affairsRouter from './affairs'
-import popularizeRouter from './popularize'
-import lightningRouter from './lightning'
-import interactionRouter from './interaction'
+import weatherForecastRouter from './weatherForecast'
+import weatherMonitorRouter from './weatherMonitor'
+import emergencyWarningRouter from './emergencyWarning'
+import climateServicesRouter from './climateServices'
+import tornadoResearchRouter from './tornadoResearch'
+import sunGovernmentAffairsRouter from './sunGovernmentAffairs'
+import polularScienceRouter from './polularScience'
+import disasterReductionRouter from './disasterReduction'
+import weatherInteractRouter from './weatherInteract'
 
 Vue.use(Router)
 
@@ -29,54 +29,54 @@ const router = new Router({
     path: '/',
     component: home,
     meta: {
-      nologin: true
+      nologin: true,
     },
     name: 'home'
   }, {
-    path: '/forecast',
-    name: 'forecast',
+    path: '/weatherForecast',
+    name: 'weatherForecast',
     component: article,
-    children: forecastRouter
+    children: weatherForecastRouter
   }, {
-    path: '/monitor',
-    name: 'monitor',
+    path: '/weatherMonitor',
+    name: 'weatherMonitor',
     component: article,
-    children: monitorRouter
+    children: weatherMonitorRouter
   }, {
-    path: '/warning',
-    name: 'warning',
+    path: '/emergencyWarning',
+    name: 'emergencyWarning',
     component: article,
-    children: warningRouter
+    children: emergencyWarningRouter
   }, {
-    path: '/service',
-    name: 'service',
+    path: '/climateServices',
+    name: 'climateServices',
     component: article,
-    children: serviceRouter
+    children: climateServicesRouter
   }, {
-    path: '/tornado',
-    name: 'tornado',
+    path: '/tornadoResearch',
+    name: 'tornadoResearch',
     component: article,
-    children: tornadoRouter
+    children: tornadoResearchRouter
   }, {
-    path: '/affairs',
-    name: 'affairs',
+    path: '/sunGovernmentAffairs',
+    name: 'sunGovernmentAffairs',
     component: article,
-    children: affairsRouter
+    children: sunGovernmentAffairsRouter
   },{
-    path: '/popularize',
-    name: 'popularize',
+    path: '/polularScience',
+    name: 'polularScience',
     component: article,
-    children: popularizeRouter
+    children: polularScienceRouter
   },{
-    path: '/lightning',
-    name: 'lightning',
+    path: '/disasterReduction',
+    name: 'disasterReduction',
     component: article,
-    children: lightningRouter
+    children: disasterReductionRouter
   },{
-    path:'/interaction',
-    name:'interaction',
+    path:'/weatherInteract',
+    name:'weatherInteract',
     component:article,
-    children:interactionRouter
+    children:weatherInteractRouter
   }]
 })
 

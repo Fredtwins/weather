@@ -34,18 +34,20 @@ export default {
 
   },
   mounted() {
-    this.navList = this.$store.state.navList
     this.current = this.$router.history.current.matched[0].name
   },
-  beforeRouteLeave(to, from, next) {
+  beforeRouteLeave(to, from, next) {    
     this.current = to.matched[0].name
     next()
   },
+  computed:{
+    navList(){
+      return this.$store.state.initData.catalog
+    }
+  },
   data: function () {
     return {
-      current: '',
-      current1: '',
-      navList:[]
+      current: ''
     }
   }
 };

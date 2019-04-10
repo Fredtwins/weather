@@ -3,22 +3,30 @@
     <ul class="nav clear">
       <li
         v-for="item in navList"
-        :key="item.path"
+        :key="'/'+item.alias"
         class="list"
       >
         <router-link
+          v-if="item.type==2"
           class="nav-button"
-          :to="item.path"
-        >{{item.title}}</router-link>
-        <dl>
+          :to="'/'+item.alias"
+        >{{item.name}}</router-link>
+        <span
+          v-else-if="item.type==1"
+          class="nav-button"
+        >
+          {{item.name}}
+        </span>
+        <dl v-if="item.children && item.children.length>0">
           <dd
             v-for="child in item.children"
-            :key="child.path"
+            :key="child.jumpUrl"
           >
             <router-link
+              v-if="child.jumpType==2"
               class="nav-button"
-              :to="child.path"
-            >{{child.title}}</router-link>
+              :to="child.jumpUrl"
+            >{{child.name}}</router-link>
           </dd>
         </dl>
       </li>
@@ -28,12 +36,9 @@
 
 <script>
 export default {
-  mounted () {
-    this.navList = this.$store.state.navList
-  },
-  data () {
-    return {
-      navList: []
+  computed: {
+    navList() {
+      return this.$store.state.initData.catalog
     }
   }
 }
@@ -64,7 +69,9 @@ export default {
       box-sizing: border-box;
       text-align: center;
       cursor: pointer;
-      > a {
+
+      > a,
+      > .nav-button {
         width: 100%;
         height: 100%;
         display: block;

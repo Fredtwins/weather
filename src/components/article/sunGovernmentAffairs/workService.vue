@@ -1,39 +1,82 @@
 <template>
   <div class="affairs-service">
-    <div v-html="content"></div>
+    <div class="list clearfloat" v-if="type=='list'">
+      <div  v-for="(item,index) in list" :key="index" class="list-box">
+          <router-link class="inside" v-if="item.type == 'content'" :to="item.path">
+            <img :src="item.img" />
+            <span>{{item.title}}</span>
+          </router-link>
+          <a class="inside" v-else-if="item.type=='link'" :href="item.path" target="blank">
+              <img :src="item.img" />
+              <span>{{item.title}}</span>
+          </a>
+        </div>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 <script>
-import { getWorkService } from 'api/article'
-import { ERR_OK } from 'api/config'
-import { errorNotice } from 'common/js/dom'
+
 export default {
-  data () {
-    return {
-      content: null
+  mounted(){
+    this.setType(this.$route)
+  },
+  beforeRouteUpdate(to,from,next){
+    this.setType(to)
+    next()
+  },
+  methods:{
+    setType(route){
+      this.type = route.name=="affairs_service_content"?'content':'list'
     }
   },
-  mounted () {
-    this._getWorkService()
-  },
-  methods: {
-    // 获取阳光政务-通知公告的列表
-    _getWorkService (page) {
-      getWorkService(page).then(res => {
-        if (res.code === ERR_OK) {
-          this.content = res.data[0].content
-        }
-      }).catch(res => {
-        errorNotice(res.msg)
-      })
+  data() {
+    return {
+      type:'list',
+      list: [{
+        type: 'link',
+        img: require('../img/gdzwfww.jpg'),
+        path:'http://www.gdzwfw.gov.cn/portal/branch-hall?orgCode=456073670',
+        title: '政务服务网'
+      }, {
+        type: 'content',
+        img: require('../img/zxbs4.jpg'),
+        path:'/affairs/service/content/佛山市气象台开局气象证明指引',
+        title: '佛山市气象台开局气象证明指引'
+      }]
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0}
 .affairs-service {
   width: 100%;
   padding: 26px 0;
   box-sizing: border-box;
+  .list-box{
+    width: 266px;
+    margin:0 0 20px 46px;
+    float: left;
+    .inside{
+      width: 100%;
+      display: block;
+      span,img{
+        width: 100%;
+        display: block
+      }
+      img{
+        height: 104px;
+        margin-bottom: 10px;
+      }
+      span{
+        height: 14px;
+        line-height: 14px;
+        font-size: 14px;
+        font-family: "宋体";
+        text-align: center;
+      }
+    }
+  }
 }
 </style>

@@ -1,4 +1,5 @@
 import { ajaxGet } from './axios'
+<<<<<<< HEAD
 import { getCodeUrl } from 'common/js/getCodeUrl'
 
 // 首页，获取网站内容（接口地址，顶部轮播图，漂浮广告，友情链接，版权信息）
@@ -29,11 +30,21 @@ export function getRecommend () {
 
   let data = {
     recommend: 1
+=======
+
+// 首页-综合
+export function Gethomemore (obj) {
+  let url = 'mpsp/web/index/synthesis'
+
+  let data = {
+    ...obj
+>>>>>>> b9eea966b6c640adea089e0f12d3a4e841b641c5
   }
 
   return ajaxGet(url, data)
 }
 
+<<<<<<< HEAD
 // 首页-综合本地预报
 export function Gethomemore () {
   let url = getCodeUrl('localForecast')
@@ -46,6 +57,11 @@ export function Gethomemore () {
 // 首页-十天天气预报图
 export function Getshare10 (obj) {
   let url = getCodeUrl('10dForecast')
+=======
+// 首页-十天天气预报图
+export function Getshare10 (obj) {
+  let url = 'mpsp/web/folo10dLastShare/list'
+>>>>>>> b9eea966b6c640adea089e0f12d3a4e841b641c5
 
   let data = {
     ...obj
@@ -56,7 +72,11 @@ export function Getshare10 (obj) {
 
 // 首页-十五天天气预报
 export function Getshare15 (obj) {
+<<<<<<< HEAD
   let url = getCodeUrl('15dForecast')
+=======
+  let url = 'mpsp/web/folo15dLastShare/list'
+>>>>>>> b9eea966b6c640adea089e0f12d3a4e841b641c5
 
   let data = {
     ...obj
@@ -64,6 +84,7 @@ export function Getshare15 (obj) {
 
   return ajaxGet(url, data)
 }
+<<<<<<< HEAD
 
 // 首页，本地交通预报图片
 export function GetTracfficImg () {
@@ -98,3 +119,5 @@ export function GetScenice (page = 1) {
 
   return ajaxGet(url, data)
 }
+=======
+>>>>>>> b9eea966b6c640adea089e0f12d3a4e841b641c5

@@ -1,60 +1,71 @@
 <template>
   <div class="warning-foshan">
     <div class="inside">
-      <div class="scroll-area" @mouseover="stopScroll" @mouseleave="startScroll">
-        <div id="scroll-inside" ref="scroll-inside" class="scroll-inside" :style="{'left':scrollDirection}">
-          <template>
-            <template v-for="(item,index) in scrollList">
-              <div :key="index" class="scroll-box">
-                <span>{{item.cn}} {{item.formatTime}} </span>
-                <img :src="httpUrl+'/image/warning/wa_fo/'+item.code+'.png'" />
+      <div
+        class="scroll-area"
+        @mouseover="stopScroll"
+        @mouseleave="startScroll"
+      >
+        <div
+          id="scroll-inside"
+          class="scroll-inside"
+          :style="{'left':scrollDirection}"
+        >
+          <template v-if="currentWarning">
+            <template v-for="(item,index) in scrollList[currentWarning]">
+              <div
+                :key="'scroll-'+currentWarning+'-'+index"
+                class="scroll-box"
+              >
+                <span>{{item.city}} {{item.time}} </span>
+                <img :src="'/images/warning/wa_fo/'+currentWarning+'.png'" />
               </div>
             </template>
           </template>
         </div>
       </div>
       <div class="nav-area">
-        <span :class="['nav-button',{'current':showStatus==='map'}]" @click="showSwitch('map')">区域展示</span>
-        <span :class="['nav-button',{'current':showStatus==='list'}]" @click="showSwitch('list')">列表展示</span>
-        <a class="nav-button last" href="http://gd.weather.com.cn/zhyj/index.shtml" target="blank">全省预警</a>
+        <span
+          :class="['nav-button',{'current':showStatus=='map'}]"
+          @click="showSwitch('map')"
+        >区域展示</span>
+        <span
+          :class="['nav-button',{'current':showStatus=='list'}]"
+          @click="showSwitch('list')"
+        >列表展示</span>
+        <a
+          class="nav-button last"
+          href="http://gd.weather.com.cn/zhyj/index.shtml"
+          target="blank"
+        >全省预警</a>
       </div>
       <div class="content-area">
-        <div v-if="showStatus === 'map'" class="show-map">
+        <div
+          v-if="showStatus == 'map'"
+          class="show-map"
+        >
           <div class="map-nav">
             <div class="title">预警信号类型</div>
             <div class="map-list">
-              <template v-for="(item,index) in warningType">
-                <span :key="'map-nav-'+index" :class="['map-nav-button',{'current':currentWarning === item}]" @click="currentSwitch(item)">
-                  <img :src="httpUrl+'/image/warning/wa_fo/'+item+'.png'" />
+              <template v-for="(item,index) in scrollList">
+                <span
+                  :key="'map-nav-'+index"
+                  :class="['map-nav-button',{'current':currentWarning == index}]"
+                  @click="currentSwitch(index)"
+                >
+                  <img :src="'/images/warning/wa_fo/'+index+'.png'" />
                 </span>
               </template>
             </div>
-          </div>
-          <div class="map-left">
-            <div class="title">当前预警信号统计信息</div>
-            <table width="230px">
-              <tr>
-                <th>当前预警信号</th>
-                <th>白</th>
-                <th>蓝</th>
-                <th>黄</th>
-                <th>橙</th>
-                <th>红</th>
-              </tr>
-              <tr v-for="(item, index) in warningTypeNum">
-                <td>{{item.type}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </table>
           </div>
           <div class="map-content">
             <map-area :current-code="currentWarning" />
           </div>
         </div>
-        <div v-if="showStatus === 'list'" class="show-list">
+        <div
+          v-if="showStatus == 'list'"
+          class="show-list"
+        >
           <list-area />
         </div>
       </div>
@@ -67,171 +78,118 @@ import axios from 'axios'
 import jqury from 'jquery'
 import mapArea from './map'
 import listArea from './list'
-import { getFoshanEmergency } from 'api/article'
-import { httpUrl, ERR_OK } from 'api/config'
-import { errorNotice } from 'common/js/dom'
 
 export default {
   components: { mapArea, listArea },
-  data () {
+  async mounted() {
+
+    const dataSource = await this.getData()
+
+    this.setData(dataSource)
+  },
+  beforeDestroy() {
+    this.stopScroll()
+  },
+  data() {
     return {
+      showStatus: 'map',
+      cityMap: {
+        GDSS: '三水',
+        GDSD: '顺德',
+        GDNH: '南海',
+        GDGM: '高明',
+        BFFO: '禅城'
+      },
+      warningList: [],
+      currentWarning: '',
       scrollDirection: '100%',
-      httpUrl: httpUrl,
-      scrollList: [],
-      scrollMove: 'scrollMove',
-      showStatus: 'map', // 展示的类型
-      warningType: [], // 预警信号类型
-      currentWarning: '', // 当前预警信号类型
-      warningTypeNum: [] // 当前预警信号统计信息
+      scrollList: {},
+      scrollMove: 'scrollMove'
     }
   },
-  mounted () {
-    this._getFoshanEmergency()
-  },
   methods: {
-    _getFoshanEmergency () {
-      getFoshanEmergency().then(res => {
-        if (res.code === ERR_OK) {
-          console.log(res)
-          let arr = []
-          if (res.data.dists.length > 0) {
-            res.data.dists.forEach(Item => {
-              if (Item.length > 0) {
-                Item.forEach(item => {
-                  arr.push(item)
-                })
-              }
-            })
-          }
-          this.scrollList = arr
-          this.warningType = res.data.codeSet
-          let numArr = []
-          res.data.codeCounts.forEach(item => {
-            for (let i in item) {
-              console.log(i)
-              numArr.push({
-                level: i,
-                num: item[i]
-              })
-            }
-          })
-          console.log(numArr)
-          this.warningTypeNum = res.data.codeCounts
-          setTimeout(() => {
-            this.startScroll()
-          }, 500)
-        }
-      }).catch(res => {
-        errorNotice(res.msg)
-      })
+    getData() {
+
+      // 当前预警状态
+      let currentStatus = axios.get('/warning/wa_fotown_inforce.js').then(res => {
+        return res.data
+      });
+
+      // 区预警状态
+      let cityStatus = axios.get('/warning/wa_fo_inforce.js').then(res => {
+        return res.data
+      });
+
+      return Promise.all([currentStatus, cityStatus])
     },
+    setData(data) {
+
+      // 整理各区预警数据
+      data[1].forEach(item => {
+        let { code, station_code, datetime } = item
+        !this.scrollList[code] && (this.scrollList[code] = [])
+        this.scrollList[code].push({
+          city: this.cityMap[station_code],
+          time: datetime
+        })
+      })
+
+      !this.currentWarning && (this.currentWarning = data[1][0].code)
+
+    },
+
+    // 切换地图模式和列表模式
+    showSwitch(status) {
+      this.showStatus != status && (this.showStatus = status)
+    },
+
     // 停止滚动
-    stopScroll () {
+    stopScroll() {
       this.scrollMove && clearInterval(this.scrollMove)
     },
+
     // 开始滚动
-    startScroll () {
+    startScroll() {
       this.setScroll()
     },
+
+    // 切换预警类型
+    currentSwitch(index) {
+      if (this.currentWarning != index) {
+        clearInterval(this.scrollMove)
+        this.scrollDirection = '100%'
+        this.currentWarning = index
+      }
+    },
+
     // 设置滚动
-    setScroll () {
-      let el = this.$refs['scroll-inside']
+    setScroll() {
+      let el = document.getElementById("scroll-inside")
       let originDirection, targetDirection
-      if (el.style.left === '100%') {
-        originDirection = 940
+      if (el.style.left == "100%") {
+        originDirection = el.offsetWidth
       } else {
         originDirection = parseFloat(el.style.left)
       }
-      targetDirection = -el.offsetWidth
+      targetDirection = -originDirection
       this.scrollDirection = originDirection + 'px'
       this.scrollMove = setInterval(() => {
         if (originDirection > targetDirection) {
           originDirection -= 1
         } else {
-          originDirection = 940
+          originDirection = -targetDirection
         }
         this.scrollDirection = originDirection + 'px'
       }, 50)
-    },
-    // 切换地图模式和列表模式
-    showSwitch (status) {
-      this.showStatus !== status && (this.showStatus = status)
-    },
-    // 切换预警类型
-    currentSwitch (type) {
-      console.log(type)
-      if (this.currentWarning !== type) {
-        clearInterval(this.scrollMove)
-        this.scrollDirection = '100%'
-        this.currentWarning = type
-      }
     }
   },
-  beforeDestroy () {
-    this.stopScroll()
+  watch: {
+    currentWarning() {
+      this.$nextTick(() => {
+        this.setScroll()
+      })
+    }
   }
-//  async mounted() {
-//    const dataSource = await this.getData()
-//    console.log(dataSource)
-//    this.setData(dataSource)
-//  },
-
-//  data() {
-//    return {
-//      httpUrl: httpUrl,
-//      showStatus: 'map',
-//      cityMap: {
-//        GDSS: '三水',
-//        GDSD: '顺德',
-//        GDNH: '南海',
-//        GDGM: '高明',
-//        BFFO: '禅城'
-//      },
-//      warningList: [],
-//      currentWarning: '',
-//      scrollDirection: '100%',
-//      scrollList: {},
-//      scrollMove: 'scrollMove'
-//    }
-//  },
-//  methods: {
-//    getData() {
-//
-//      // 当前预警状态
-//      let currentStatus = axios.get('/warning/wa_fotown_inforce.js').then(res => {
-//        return res.data
-//      });
-//
-//      // 区预警状态
-//      let cityStatus = axios.get('/warning/wa_fo_inforce.js').then(res => {
-//        return res.data
-//      });
-//
-//      return Promise.all([currentStatus, cityStatus])
-//    },
-//    setData(data) {
-//
-//      // 整理各区预警数据
-//      data[1].forEach(item => {
-//        let { code, station_code, datetime } = item
-//        !this.scrollList[code] && (this.scrollList[code] = [])
-//        this.scrollList[code].push({
-//          city: this.cityMap[station_code],
-//          time: datetime
-//        })
-//      })
-//      console.log(this.scrollList)
-//      !this.currentWarning && (this.currentWarning = data[1][0].code)
-//
-//    },
-//  },
-//  watch: {
-//    currentWarning() {
-//      this.$nextTick(() => {
-//        this.setScroll()
-//      })
-//    }
-//  }
 }
 </script>
 <style lang="scss" scoped>
@@ -340,22 +298,6 @@ export default {
             .current {
               border-color: #ff6c00;
             }
-          }
-        }
-        .map-left{
-          margin-top: 20px;
-          width: 230px;
-          .title {
-            background: #025bc4;
-            height: 24px;
-            line-height: 24px;
-            text-align: center;
-            color: #fff;
-            font-size: 14px;
-            font-family: "宋体";
-          }
-          table{
-            border: 1px solid #dfdcdc;
           }
         }
         .map-content {
